@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {Routes, Route} from "react-router-dom";
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
+import 'bootstrap/dist/css/bootstrap.min.css'
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
@@ -11,14 +11,12 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
-import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainMenuList, secondaryMenuList } from './MenuList';
-import Home from "../components/Home";
 import {Grid} from "@mui/material";
+import Router from "../route/Router"
 
 const drawerWidth = 240;
 
@@ -85,7 +83,8 @@ const defaultTheme = createTheme();
 
 
 function Master() {
-    const [open, setOpen] = React.useState(true);
+    let width = window.innerWidth
+    const [open, setOpen] = React.useState(width > 900);
     const toggleDrawer = () => {
         setOpen(!open);
     };
@@ -122,7 +121,7 @@ function Master() {
                 <Drawer variant="permanent" open={open}>
                     <Grid container spacing={3}>
                         <Grid item xs={6} md={6} lg={6}>
-                            <h3 style={{marginLeft:'20px'}}>My APP</h3>
+                            <h4 className={'m-3'}>My APP</h4>
                         </Grid>
                         <Grid item xs={6} md={6} lg={6}>
                             <Toolbar
@@ -132,9 +131,12 @@ function Master() {
                                     justifyContent: 'flex-end',
                                     px: [1],
                                 }}>
-
-                                <IconButton onClick={toggleDrawer}>
-                                    <ChevronLeftIcon />
+                                <IconButton
+                                    edge="start"
+                                    color="inherit"
+                                    aria-label="open drawer"
+                                    onClick={toggleDrawer}>
+                                    <MenuIcon />
                                 </IconButton>
                             </Toolbar>
                         </Grid>
@@ -156,13 +158,11 @@ function Master() {
                     }}
                 >
                     <Toolbar />
-                    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-                        <Routes>
-                            <Route path='/' element={<Home />} />
-                        </Routes>
+                    <div className={'p-3'}>
+                        <Router/>
 
                         <Copyright sx={{ pt: 4 }} />
-                    </Container>
+                    </div>
                 </Box>
             </Box>
         </ThemeProvider>
